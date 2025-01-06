@@ -4,23 +4,23 @@
 
 #define gc getchar();
 
-struct data {
+struct Data {
     int id = 0;
     char title[100];
     int quantity;
 };
 
-data* dat = (data*)malloc(sizeof(data));
+Data* data = (Data*)malloc(sizeof(data));
 
 int bookCount = 0;
 
 void printMenu();
-void enterToCont();
+void enter();
 
-void add();
-void borrow();
-void del();
-void view();
+void addBook();
+void borrowBook();
+void deleteStock();
+void bookList();
 
 int main() {
     do {
@@ -34,19 +34,20 @@ int main() {
 
         switch (inp) {
             case 1 :
-                add();
+                addBook();
                 break;
             case 2 :
-                borrow();
+                borrowBook();
                 break;
             case 3 :
-                del();
+                deleteStock();
                 break;
             case 4 :
-                view();
+                bookList();
                 break;
             case 5 :
-                enterToCont();
+                puts("Thank You!!");
+                enter();
                 return 0;
         }
     } while (1);
@@ -57,48 +58,48 @@ void printMenu() {
     system("clear");
     puts("SUNIB University Library");
     puts("1. Add Book");
-    puts("2. Borrow Book");
-    puts("3. Delete Stock");
+    puts("2. Borrow Book Book");
+    puts("3. delete Stock");
     puts("4. Book List");
     puts("5. Exit");
 }
 
-void enterToCont() {
+void enter() {
     printf("Press ENTER to continue..."); gc
 }
 
-void add() {
+void addBook() {
     // Book Name
     printf("Input book title : ");
-    scanf("%[^\n]", dat[bookCount].title); gc
+    scanf("%[^\n]", data[bookCount].title); gc
 
     // Book Quantity
     printf("Input book quantity : ");
-    scanf("%d", &dat[bookCount].quantity); gc
+    scanf("%d", &data[bookCount].quantity); gc
 
-    puts("Book has been successfully added");
-    dat[bookCount].id++;
+    puts("Book has been successfully addBooked");
+    data[bookCount].id++;
     bookCount++;
-    enterToCont();
+    enter();
 }
 
-void view() {
+void bookList() {
     for (int i = 0; i < bookCount; i++) {
-        printf("ID : %d\n", dat[i].id);
-        printf("Title : %s\n", dat[i].title);
-        printf("Quantity : %d\n", dat[i].quantity);
+        printf("ID : %d\n", data[i].id);
+        printf("Title : %s\n", data[i].title);
+        printf("Quantity : %d\n", data[i].quantity);
         puts("=====================");
     }
-    enterToCont();
+    enter();
 }
 
-void borrow() {
+void borrowBook() {
     if (bookCount == 0) {
         puts("There is no book");
-        enterToCont();
+        enter();
         return;
     }
-    view();
+    bookList();
     char validation[100];
     do {
         printf("Choose between id or title [id / title] : ");
@@ -113,7 +114,7 @@ void borrow() {
             scanf("%[^\n]", temp); gc
 
             for (int i = 0; i < bookCount; i++) {
-                if (strcmp(temp, dat[i].title) == 0) {
+                if (strcmp(temp, data[i].title) == 0) {
                     idx = i;
                     break;
                 }
@@ -127,18 +128,18 @@ void borrow() {
         } while (idx < 0 || idx > bookCount);
     }
     
-    puts("Book has been successfully borrowed");
-    dat[idx].quantity--;
-    enterToCont();
+    puts("Book has been successfully borrowBooked");
+    data[idx].quantity--;
+    enter();
 }
 
-void del() {
+void deleteStock() {
     if (bookCount == 0) {
         puts("There is no book");
-        enterToCont();
+        enter();
         return;
     }
-    view();
+    bookList();
     int temp;
     do {
         printf("Input book id : ");
@@ -147,9 +148,9 @@ void del() {
     } while (temp < 0 || temp > bookCount);
 
     for (int i =- 0; i < bookCount - 1; i++) {
-        dat[i] = dat[i + 1];
+        data[i] = data[i + 1];
     }
     bookCount--;
-    puts("Book has been succesfully deleted");
-    enterToCont();
+    puts("Book has been succesfully deleteStocketed");
+    enter();
 }
