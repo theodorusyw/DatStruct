@@ -24,25 +24,29 @@ void bookList();
 
 int main() {
     do {
-        int inp = -1;
+        int choice = -1;
         printMenu();
 
         do {
             printf(">> ");
-            scanf("%d", &inp); gc
-        } while (inp < 0 || inp > 5);
+            scanf("%d", &choice); gc
+        } while (choice < 0 || choice > 5);
 
-        switch (inp) {
+        switch (choice) {
             case 1 :
+                puts("========================");
                 addBook();
                 break;
             case 2 :
+                puts("========================");
                 borrowBook();
                 break;
             case 3 :
+                puts("========================");
                 deleteStock();
                 break;
             case 4 :
+                puts("========================");
                 bookList();
                 break;
             case 5 :
@@ -57,9 +61,10 @@ int main() {
 void printMenu() {
     system("clear");
     puts("SUNIB University Library");
+    puts("========================");
     puts("1. Add Book");
-    puts("2. Borrow Book Book");
-    puts("3. delete Stock");
+    puts("2. Borrow Book");
+    puts("3. Delete Stock");
     puts("4. Book List");
     puts("5. Exit");
 }
@@ -70,14 +75,14 @@ void enter() {
 
 void addBook() {
     // Book Name
-    printf("Input book title : ");
+    printf("Input Book Title : ");
     scanf("%[^\n]", data[bookCount].title); gc
 
     // Book Quantity
-    printf("Input book quantity : ");
+    printf("Input Book Quantity : ");
     scanf("%d", &data[bookCount].quantity); gc
 
-    puts("Book has been successfully addBooked");
+    puts("Book has been successfully added");
     data[bookCount].id++;
     bookCount++;
     enter();
@@ -110,7 +115,7 @@ void borrowBook() {
     if (strcmp(validation, "title") == 0) {
         do {
             char temp[100];
-            printf("Input book title : ");
+            printf("Input Book Title : ");
             scanf("%[^\n]", temp); gc
 
             for (int i = 0; i < bookCount; i++) {
@@ -122,13 +127,13 @@ void borrowBook() {
         } while (idx == -1);
     } else {
         do {
-            printf("Input book id : ");
+            printf("Input Book ID : ");
             scanf("%d", &idx); gc
             idx --;
         } while (idx < 0 || idx > bookCount);
     }
     
-    puts("Book has been successfully borrowBooked");
+    puts("Book has been successfully Booked");
     data[idx].quantity--;
     enter();
 }
@@ -142,7 +147,7 @@ void deleteStock() {
     bookList();
     int temp;
     do {
-        printf("Input book id : ");
+        printf("Input Book ID : ");
         scanf("%d", &temp); gc
         temp--;
     } while (temp < 0 || temp > bookCount);
