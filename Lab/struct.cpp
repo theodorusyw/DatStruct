@@ -9,6 +9,7 @@ struct Student {
 int main () {
     struct Student student;
 
+    // akses anggota struct5
     student.age = 20;
     student.height = 170;
 
