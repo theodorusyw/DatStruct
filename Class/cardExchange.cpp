@@ -62,7 +62,7 @@ void popMid(char* dicari, char* diganti) {
     }
 
     if (temp == h) h = temp->next;
-    else prev->next == temp->next;
+    else prev->next = temp->next;
     if (temp == t) t = prev;
 
     free(temp->nama);
@@ -86,7 +86,7 @@ void popMid2(char* input) {
     }
 
     if (temp == h) h = temp->next;
-    else prev->next == temp->next;
+    else prev->next = temp->next;
     if (temp == t) t = prev;
 
     free(temp->nama);
