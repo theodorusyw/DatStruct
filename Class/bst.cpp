@@ -44,6 +44,19 @@ void inorder(struct Student *root) {
     inorder(root->right);
 }
 
+void preorder(struct Student *root) {
+    if (root == NULL) return;
+    printf("Student ID: %d, Name: %s\n", root->id, root->name);
+    preorder(root->left);
+    preorder(root->right);
+}
+void postorder(struct Student *root) {
+    if (root == NULL) return;
+    printf("Student ID: %d, Name: %s\n", root->id, root->name);
+    postorder(root->left);
+    postorder(root->right);
+}
+
 struct Student *search(struct Student *root ,int id) {
     // Case 1: kalo Search ga ketemu
     if (root == NULL) {
@@ -67,6 +80,30 @@ struct Student *search(struct Student *root ,int id) {
         return search(root->left, id);
     }
 }
+struct Student *update(struct Student *root ,int id, char *name) {
+    // Case 1: kalo update ga ketemu
+    if (root == NULL) {
+        puts("Not Found!");
+        return NULL;
+    }
+
+    //Case 2: kalos update ketemu
+    else if (root->id == id) {
+        puts("Found!");
+        return root;
+    }
+
+    // Case 3: kalo ID yang mau diupdate lebih besar dari current id
+    else if (id > root->id) {
+        return update(root->right, id, name);
+    }
+
+    // Case 4: kalo ID yang mau diupdate lebih kecil dari current id
+    else if (id < root->id) {
+        return update(root->left, id, name);
+    }
+}
+
 
 int main() {
     struct Student *root = NULL;
@@ -89,6 +126,20 @@ int main() {
     if (searchedStudent != NULL) {
         printf("Found Student with id %d and name %s\n", searchedStudent->id, searchedStudent->name);
     }
+
+    // Updating
+    puts("\nUpdating: ");
+    struct Student *updatedStudent = update(root, 1, "tommy");
+    if (updatedStudent != NULL) {
+        printf("Updated Students with id %d and name %s\n", updatedStudent->id, updatedStudent->name);
+    }
+
+    puts("\nTraversal After Updating: ");
+    inorder(root);
+    puts("\nPreorder:");
+    preorder(root);
+    puts("\nPostorder:");
+    postorder(root);
 
     return 0;
 }
