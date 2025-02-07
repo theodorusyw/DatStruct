@@ -45,14 +45,18 @@ void inorder(struct Student *root) {
 int main() {
     struct Student *root = NULL;
 
+    // Insertion
     puts("Inserting: ");
     root = insert(root, 3, "bill");
     root = insert(root, 1, "tom");
     root = insert(root, 16, "jake");
     root = insert(root, 78, "diana");
     root = insert(root, 33, "eve");
-
     puts("Inserting Succesfull!");
+
+    // Traversal
+    puts("Inorder Traversal: ");
+    inorder(root);
 
     return 0;
 }
