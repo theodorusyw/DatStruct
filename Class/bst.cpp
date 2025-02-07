@@ -35,7 +35,14 @@ struct Student *insert(struct Student *root, int id, char *name) {
     return root;
 }
 
-int main () {
+void inorder(struct Student *root) {
+    if (root == NULL) return;
+    inorder(root->left);
+    printf("Student ID: %d, Name: %s\n", root->id, root->name);
+    inorder(root->right);
+}
+
+int main() {
     struct Student *root = NULL;
 
     puts("Inserting: ");
