@@ -34,3 +34,18 @@ struct Student *insert(struct Student *root, int id, char *name) {
 
     return root;
 }
+
+int main () {
+    struct Student *root = NULL;
+
+    puts("Inserting: ");
+    root = insert(root, 3, "bill");
+    root = insert(root, 1, "tom");
+    root = insert(root, 16, "jake");
+    root = insert(root, 78, "diana");
+    root = insert(root, 33, "eve");
+
+    puts("Inserting Succesfull!");
+
+    return 0;
+}
