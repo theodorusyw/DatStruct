@@ -59,9 +59,9 @@ tnode* delNode(tnode* root, int value) {
     }
 
     if (value < root->value) {
-        delNode(root->left, value);
+        root->left = delNode(root->left, value);
     } else if (value > root->value) {
-        delNode(root->right, value);
+        root->right = delNode(root->right, value);
     } else {
         if (root->left == NULL && root->right == NULL) {
             free(root);
