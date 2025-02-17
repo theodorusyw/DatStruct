@@ -49,7 +49,7 @@ void inOrder(tnode* root) {
     if(root == NULL) return;
 
     inOrder(root->left);
-    printf("%d", root->value);
+    printf("%d ", root->value);
     inOrder(root->right);
 }
 
@@ -93,9 +93,15 @@ tnode* delNode(tnode* root, int value) {
 int main() {
     tnode* root = NULL;
 
-    root = buildBST(root, 6);
+    root = buildBST(root, 20);
+    root = buildBST(root, 15);
+    root = buildBST(root, 25);
     root = buildBST(root, 10);
-    root = buildBST(root, 3);
+    root = buildBST(root, 12);
+    root = buildBST(root, 21);
+    root = buildBST(root, 20);
+    root = buildBST(root, 50);
+    root = buildBST(root, 23);
     
     // printf("%d", root->value);
 
@@ -104,8 +110,12 @@ int main() {
 
     inOrder(root);
     printf("\n");
-    delNode(root, 3);
+
+    delNode(root, 15);
     inOrder(root);
+
+    // delNode(root, 3);
+    // inOrder(root);
 
     return 0;
 }
