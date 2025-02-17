@@ -23,38 +23,63 @@ Visitor *createVisitor(char *nama, char *tiket) {
 void registerVisitor(char *nama, char *tiket) {
     Visitor *newVisitor = createVisitor(nama, tiket);
 
-    // kalo antriannya kosong
     if (!head) {
         head = tail = newVisitor;
         return;
     }
 
-    Visitor *current = head;
-    
-    // memprioritaskan FAST_TRACK di depan REGULER
-    while(current && strcmp(current->tiket, "FAST_TRACK") == 0) {
-        current = current->next;
-    }
+    if (strcmp(newVisitor->tiket, "FAST_TRACK") == 0) {
+        Visitor *current = head;
+        while (current && strcmp(current->tiket, "FAST_TRACK") == 0) {
+            current = current->next;
+        }
 
-    // masukin setelah FAST_TRACK
-    if (current) {
-        newVisitor->next = current;
-        newVisitor->prev = current->prev;
-        if (current->prev) current->prev->next = newVisitor;
-        else head = newVisitor;
-        current->prev = newVisitor;
-    } else { // kalo ngga ada REGULER dimasukin di belakang
-        tail->next = newVisitor;
-        newVisitor->prev = tail;
-        tail = newVisitor;
+        // nek ono REGULER, lebokke sakdurunge REGULER pertama
+        if (current) {
+            newVisitor->next = current;
+            newVisitor->prev = current->prev;
+            if (current->prev) {
+                current->prev->next = newVisitor;
+            } else {
+                head = newVisitor;
+            }
+            current->prev = newVisitor;
+        } else { 
+            // nek ra ono REGULER, ditambahno neng mburine
+            tail->next = newVisitor;
+            newVisitor->prev = tail;
+            tail = newVisitor;
+        }
+    } else { 
+        Visitor *current = tail;
+        while (current && strcmp(current->tiket, "REGULER") != 0) {
+            current = current->prev;
+        }
+
+        // nek ono REGULER, lebokke sak bar e REGULER terakhir
+        if (current) {
+            newVisitor->next = current->next;
+            if (current->next) {
+                current->next->prev = newVisitor;
+            } else {
+                tail = newVisitor;
+            }
+            current->next = newVisitor;
+            newVisitor->prev = current;
+        } else { 
+            // nek rung ono REGULER, ditambahno neng mburi
+            tail->next = newVisitor;
+            newVisitor->prev = tail;
+            tail = newVisitor;
+        }
     }
 }
+
 
 void removeVisitor(char *nama) {
     Visitor *current = head;
 
     while (current) {
-        // hapus node
         if (strcmp(current->nama, nama) == 0) {
             if (current->prev) current->prev->next = current->next;
             else head = current->next;
@@ -74,7 +99,8 @@ void callVisitor() {
     int count = 0;
 
     printf("\n");
-    // masukan 4 visitor
+
+    // njeluk 4 visitor pertama
     while (current && count < 4) {
         printf("%s ", current->nama);
         Visitor *toDel = current;
@@ -85,7 +111,7 @@ void callVisitor() {
 
     printf("got into the boat.\n");
 
-    // hitung sisa visitor
+    // itung sisane visitor
     int remain = 0;
     current = head;
     while (current) {
