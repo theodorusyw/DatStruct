@@ -71,11 +71,13 @@ tnode* delNode(tnode* root, int value) {
             root->value = temp->value;
             root->left = NULL;
             free(temp);
+            root->left = delNode(root->left, temp->value);
         } else if (root->left == NULL) {
             tnode* temp = root->right;
             root->value = temp->value;
             root->right = NULL;
             free(temp);
+            root->right = delNode(root->right, temp->value);
         } else {
             tnode* temp = root->left;
             while (temp->right != NULL) {
