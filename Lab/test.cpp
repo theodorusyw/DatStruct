@@ -15,6 +15,14 @@ struct Booking {
     struct Booking* next;
 }*bookings[HASH_SIZE];
 
+int getHashKey(char* id) {
+    int x = 0;
+    for (int i = 2; i < 5; i++) {
+        x += id[i]-'0';
+    }
+    return (x-1) % HASH_SIZE;
+}
+
 char toUpper(char x) {
     return 'a' <= x && x <= 'z' ? x - ('a'-'A'): x;
 }
@@ -24,6 +32,18 @@ char* generateID(char* roomtype) {
     for (int i = 0; i < 5; i++) {
         id[i] = i < 2 ? toUpper(roomtype[i]) : rand()%10+'0';
     }
+}
+
+struct Booking* newBooking(char* fullname, char* phonenumber, int age, char* roomtype, int stayduration) {
+    char* bookingid = generateID(roomtype);
+
+    struct Booking* curr = (struct Booking*)malloc(sizeof(struct Booking));
+    strcpy(curr->fullname, fullname);
+    strcpy(curr->phonenumber, phonenumber);
+    curr->age = age;
+    strcpy(curr->roomtype, roomtype);
+    curr->stayduration = stayduration;
+    strcpy(curr->bookingid, bookingid);
 }
 
 bool validFullName(char* fullname) {
