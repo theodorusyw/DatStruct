@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define HASH_SIZE 100
 #define gc while(getchar()!='\n');
@@ -13,6 +14,17 @@ struct Booking {
     char bookingid[7];
     struct Booking* next;
 }*bookings[HASH_SIZE];
+
+char toUpper(char x) {
+    return 'a' <= x && x <= 'z' ? x - ('a'-'A'): x;
+}
+
+char* generateID(char* roomtype) {
+    char *id = (char*)malloc(sizeof(char)*7);
+    for (int i = 0; i < 5; i++) {
+        id[i] = i < 2 ? toUpper(roomtype[i]) : rand()%10+'0';
+    }
+}
 
 bool validFullName(char* fullname) {
     int len = strlen(fullname);
