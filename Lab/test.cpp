@@ -49,20 +49,30 @@ void createBooking() {
     char roomtype[10];
     int stayduration;
 
-    printf("Input Name: ");
-    scanf("%[^\n]", fullname); gc
+    do {
+        printf("Input Name: ");
+        scanf("%[^\n]", fullname); gc
+    } while(!validFullName(fullname));
 
-    printf("Input Phone: ");
-    scanf("%[^\n]", phonenumber); gc
+    do {
+        printf("Input Phone: ");
+        scanf("%[^\n]", phonenumber); gc
+    } while(!validPhoneNumber(phonenumber));
     
-    printf("Input Age: ");
-    scanf("%d", &age); gc
+    do {
+        printf("Input Age: ");
+        scanf("%d", &age); gc
+    } while(!validAge(age));
     
-    printf("Input Room Type: ");
-    scanf("%[^\n]", roomtype); gc
+    do {
+        printf("Input Room Type: ");
+        scanf("%[^\n]", roomtype); gc
+    } while(!validRoomType(roomtype));
     
-    printf("Input Duration Stay: ");
-    scanf("%d", &stayduration); gc
+    do {
+        printf("Input Duration Stay: ");
+        scanf("%d", &stayduration); gc
+    } while(!validStayDuration(stayduration));
 }
 
 int main() {
