@@ -125,7 +125,7 @@ void createBooking() {
     } while(!validStayDuration(stayduration));
 
     pushTail(newBooking(fullname, phonenumber, age, roomtype, stayduration));
-}
+} 
 
 bool viewBooking() {
     bool found = false;
@@ -133,12 +133,36 @@ bool viewBooking() {
         struct Booking* curr = bookings[i];
         while(curr) {
             printf("Booking ID: %d\n", curr->bookingid);
+            curr = curr->next;
+            found = true;
         }
     }
+
+    if(!found) puts("Not Found");
+
+    return found;
 }
 
 int main() {
     srand(time(NULL));
+    int menu = 0;
+    do{
+        puts("1. Insert");
+        puts("2. View");
+        puts("3. Delete");
+        puts("4. Exit");
+        scanf("%d", &menu); gc
+
+        switch(menu) {
+            case 1:
+                createBooking;
+                break;
+            case 2:
+                viewBooking;
+                break;
+            case 3:
+        }
+    }while(menu != 4);
 
     return 0;
 }
