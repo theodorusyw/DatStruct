@@ -44,6 +44,23 @@ struct Booking* newBooking(char* fullname, char* phonenumber, int age, char* roo
     strcpy(curr->roomtype, roomtype);
     curr->stayduration = stayduration;
     strcpy(curr->bookingid, bookingid);
+
+    curr->next = NULL;
+
+    return curr;
+}
+
+void pushTail(struct Booking* newData) {
+    int hash = getHashKey(newData->bookingid);
+
+    if (bookings[hash] == NULL) bookings[hash] = newData;
+    else {
+        struct Booking* curr = bookings[hash];
+        while(curr->next) {
+            curr = curr->next;
+        }
+        curr->next = newData;
+    }
 }
 
 bool validFullName(char* fullname) {
@@ -105,6 +122,8 @@ void createBooking() {
         printf("Input Duration Stay: ");
         scanf("%d", &stayduration); gc
     } while(!validStayDuration(stayduration));
+
+    pushTail(newBooking(fullname, phonenumber, age, roomtype, stayduration));
 }
 
 int main() {
