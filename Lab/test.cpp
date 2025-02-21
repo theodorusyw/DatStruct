@@ -127,6 +127,18 @@ void createBooking() {
     pushTail(newBooking(fullname, phonenumber, age, roomtype, stayduration));
 }
 
+bool viewBooking() {
+    bool found = false;
+    for (int i = 0; i < HASH_SIZE; i++) {
+        struct Booking* curr = bookings[i];
+        while(curr) {
+            printf("Booking ID: %d\n", curr->bookingid);
+        }
+    }
+}
+
 int main() {
+    srand(time(NULL));
+
     return 0;
 }
