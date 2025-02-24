@@ -125,7 +125,43 @@ void createBooking() {
     } while(!validStayDuration(stayduration));
 
     pushTail(newBooking(fullname, phonenumber, age, roomtype, stayduration));
-} 
+}
+
+bool pop(char* bookingid) {
+    int hash = getHashKey(bookingid);
+
+    struct Booking* curr = bookings[hash];
+
+    if(strcmp(curr->bookingid, bookingid) == 0) {
+        bookings[hash] = curr->next;
+        free(curr);
+        return true;
+    } else {
+        while(curr->next) {
+            if (strcmp(curr->next->bookingid, bookingid) == 0) {
+                struct Booking* temp = curr->next;
+                curr->next = temp->next;
+                free(temp);
+                return true;
+            }
+            curr = curr->next;
+        }
+    }
+}
+
+void deleteBooking() {
+    if (!viewBooking()) return;
+
+    char bookingid[7];
+    printf("Input Booking ID: ");
+    scanf("%[^\n]", bookingid); gc
+
+    if (pop(bookingid)) {
+        printf("Deleted Booking %s\n", bookingid);
+    } else {
+        printf("ID Not Found!\n");
+    }
+}
 
 bool viewBooking() {
     bool found = false;
@@ -142,6 +178,8 @@ bool viewBooking() {
 
     return found;
 }
+
+
 
 int main() {
     srand(time(NULL));
@@ -161,6 +199,8 @@ int main() {
                 viewBooking;
                 break;
             case 3:
+                deleteBooking();
+                break;
         }
     }while(menu != 4);
 
