@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+// #include  <ctype.h>
 
 #define SIZE 50
 
@@ -15,12 +16,13 @@ int midSquare(const char coin[]) {
     for(int i = 0; coin[i] != '\0'; i++) key += coin[i];
     int square = key * key;
     char temp[20];
-    snprintf(temp, sizeof(temp), "%d", square);
+    snprintf(temp, sizeof(temp), "%d", square); // pengganti sprintf 
+    sprintf(temp, "%d", square);
 
     int temp_len = strlen(temp);
     int digits = (temp_len % 2 == 0) ? 2 : 3;
     int startPos = (temp_len - digits)/2;
-    char mid[4] = {0};
+    char mid[4] = {0}; // {coin[strlen(coin)/2], coin[strlen(coin)/2+1], '\0'};
     strncpy(mid, temp + startPos, digits);
     // mid[4] = '\0';
     int res = atoi(mid);
