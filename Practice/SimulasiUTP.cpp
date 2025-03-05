@@ -83,24 +83,24 @@ void borrowBook() {
     newNode->next = hashTable[key];
     hashTable[key] = newNode;
 
-    puts("===================================");
+    puts("--------------------------------------");
     puts("✅ Book borrowed successfully ✅");
-    puts("===================================");
+    puts("--------------------------------------");
     printf("Borrowing ID  : %s\n", newNode->borrowID);
     printf("Borrower Name : %s\n", newNode->name);
     printf("Library ID    : %s\n", newNode->libraryID);
     printf("Book Title    : %s\n", newNode->title);
     printf("Duration      : %d\n", newNode->duration);
-    puts("===================================");
+    puts("--------------------------------------");
 
     enterToContinue();
 }
 
 void viewBorrowedBooks() {
     int found = 0;
-    puts("---------------------------------");
+    puts("======================================");
     puts("Borrowed Books List");
-    puts("---------------------------------");
+    puts("======================================");
     for (int i = 0; i < TABLE_SIZE; i++) {
         Node* current = hashTable[i];
         while (current) {
@@ -109,15 +109,15 @@ void viewBorrowedBooks() {
             printf("Library ID    : %s\n", current->libraryID);
             printf("Book Title    : %s\n", current->title);
             printf("Duration      : %d\n", current->duration);
-            puts("---------------------------------");
+            puts("--------------------------------------");
             current = current->next;
             found = 1;
         }
     }
     if (!found) {
-        puts("---------------------------------");
+        puts("--------------------------------------");
         puts("No books borrowed yet.");
-        puts("---------------------------------");
+        puts("--------------------------------------");
     }
     enterToContinue();
 }
@@ -139,9 +139,9 @@ void returnBook() {
     }
 
     if (!temp) {
-        puts("---------------------------------");
+        puts("--------------------------------------");
         puts("Borrowing ID not found.");
-        puts("---------------------------------");
+        puts("--------------------------------------");
         enterToContinue();
         return;
     }
@@ -152,22 +152,22 @@ void returnBook() {
         hashTable[key] = temp->next;
     
     free(temp);
-    puts("---------------------------------");
-    puts("Book returned successfully!");
-    puts("---------------------------------");
+    puts("--------------------------------------");
+    puts("✅ Book returned successfully! ✅");
+    puts("--------------------------------------");
     enterToContinue();
 }
 
 void printMenu() {
     clear
-    puts("===================================");
-    puts("BookHaven Library MAnagement");
-    puts("===================================");
+    puts("======================================");
+    puts("📚📚 BookHaven Library Management 📚📚");
+    puts("======================================");
     puts("1. Borrow a Book");
     puts("2. View Borrowed Books");
     puts("3. Return a Book");
     puts("4. Exit");
-    puts("===================================");
+    puts("======================================");
 }
 
 int main () {
@@ -184,7 +184,8 @@ int main () {
             case 2: viewBorrowedBooks(); break;
             case 3: returnBook(); break;
             case 4:
-            printf("Thank you for using BookHaven Library Management\n");
+            puts("Thank you for using BookHaven Library Management!!!");
+            enterToContinue();
             break;
         }
     } while (choice != 4);
