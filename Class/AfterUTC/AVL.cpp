@@ -80,7 +80,24 @@ node* insert(node* root, int val){
 	root->height = max(height(root->left), height(root->right)) + 1;
 
     int balance = getBalance(root);
-	
+
+    if (balance > 1 && val < root->left->val) {
+        return RightRotate(root);
+    }
+
+    if (balance < -1 && val > root->right->val) {
+        return leftRotate(root);
+    }
+
+    if (balance > 1 && val > root->left->val) {
+        root->left = leftRotate(root->left);
+        return RightRotate(root);
+    }
+
+    if (balance < -1 && val < root->right->val) {
+        root->right = RightRotate(root->right);
+        return leftRotate(root);
+    }
 }
 
 
