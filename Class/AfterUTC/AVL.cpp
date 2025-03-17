@@ -66,13 +66,13 @@ node* RightRotate(node* y) {
     return x;
 }
 
-node* insert(node* root, int val) {
+node* insertNode(node* root, int val) {
 	if(root == NULL){
 		return createNode(val);
 	}else if(val < root->val){
-		root->left = insert(root->left, val);
+		root->left = insertNode(root->left, val);
 	}else if(val > root->val){
-		root->right = insert(root->right, val);
+		root->right = insertNode(root->right, val);
 	}else{
 		return root;
 	}
@@ -98,15 +98,98 @@ node* insert(node* root, int val) {
         root->right = RightRotate(root->right);
         return leftRotate(root);
     }
+
+    return root;
 }
 
+node* minValueNode(node* root) {
+    node* current = root;
+    while (current->left != NULL) {
+        current = current->left;
+    }
+    return current;
+}
+
+node* deleteNode(node* root, int val) {
+    if (root == NULL) {
+        return root;
+    }
+
+    if (val < root->val) {
+        root->left = deleteNode(root->left, val);
+    } else if (val > root->val) {
+        root->right = deleteNode(root->right, val);
+    } else {
+        if ((root->left == NULL) || (root->right == NULL)) {
+            node* temp = root->left ? root->left : root->right;
+            if (temp == NULL) {
+                temp = root;
+                root = NULL;
+            } else {
+                *root = *temp;
+            }
+            free(temp);
+        } else {
+            node* temp = minValueNode(root->right);
+            root->val = temp->val;
+            root->right = deleteNode(root->right, temp->val);
+        }
+    }
+
+    if (root == NULL) {
+        return root;
+    }
+
+    root->height = 1 + max(height(root->left), height(root->right));
+
+    int balance = getBalance(root);
+
+    if (balance > 1 && getBalance(root->left) >= 0) {
+        return RightRotate(root);
+    }
+
+    if (balance > 1 && getBalance(root->left) < 0) {
+        root->left = leftRotate(root->left);
+        return RightRotate(root);
+    }
+
+    if (balance < -1 && getBalance(root->right) <= 0) {
+        return leftRotate(root);
+    }
+
+    if (balance < -1 && getBalance(root->right) > 0) {
+        root->right = RightRotate(root->right);
+        return leftRotate(root);
+    }
+
+    return root;
+}
+
+void display(node* root) {
+    if (root != NULL) {
+        display(root->left);
+        printf("%d ", root->val);
+        display(root->right);
+    }
+}
 
 int main() {
 	node* root = NULL;
 
-    root = insert(root, 20);
-    root = insert(root, 15);
-    root = insert(root, 25);
-    
+    root = insertNode(root, 20);
+    root = insertNode(root, 15);
+    root = insertNode(root, 25);
+    root = insertNode(root, 10);
+    root = insertNode(root, 30);
+    root = insertNode(root, 5);
+
+    display(root);
+    printf("\n");
+
+    root = deleteNode(root, 10);
+
+    display(root);
+    printf("\n");
+
 	return 0;
 }
