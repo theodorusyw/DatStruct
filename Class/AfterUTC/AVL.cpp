@@ -102,7 +102,11 @@ node* insert(node* root, int val) {
 
 
 int main() {
-	
-	
+	node* root = NULL;
+
+    root = insert(root, 20);
+    root = insert(root, 15);
+    root = insert(root, 25);
+    
 	return 0;
 }
