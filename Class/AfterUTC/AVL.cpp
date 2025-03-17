@@ -191,5 +191,7 @@ int main() {
     display(root);
     printf("\n");
 
+    printf("Root: %d\n", root->val);
+
 	return 0;
 }
