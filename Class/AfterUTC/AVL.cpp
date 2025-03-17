@@ -40,6 +40,19 @@ int getBalance(node* root) {
     }
 }
 
+node*  leftRotate(node* x){
+    node* y = x->right;
+    node* T2 = y->left;
+    
+    y->left = x;
+    x->right = T2;
+    
+    x->height = max(height(x->left), height(x->right)) + 1;
+    y->height = max(height(y->left), height(y->right)) + 1;
+    
+    return y;
+}
+
 node* insert(node* root, int val){
 	if(root == NULL){
 		return createNode(val);
@@ -53,7 +66,7 @@ node* insert(node* root, int val){
 	
 	root->height = max(height(root->left), height(root->right)) + 1;
 
-    int balance
+    int balance = getBalance(root);
 	
 }
 
