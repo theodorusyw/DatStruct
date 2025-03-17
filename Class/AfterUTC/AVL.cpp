@@ -11,7 +11,7 @@ struct node{
 	struct node* right;
 };
 
-node* createNode(int val){
+node* createNode(int val) {
 	node* c = (node*) malloc(sizeof(node));
 	c->val = val;
 	c->height = 1;
@@ -20,7 +20,7 @@ node* createNode(int val){
 	return c;
 }
 
-int height(node* root){
+int height(node* root) {
 	if(root==NULL){
 		return 0;
 	}else{
@@ -28,7 +28,7 @@ int height(node* root){
 	}
 }
 
-int max(int a, int b){
+int max(int a, int b) {
 	return (a > b) ? a : b;
 }
 
@@ -40,7 +40,7 @@ int getBalance(node* root) {
     }
 }
 
-node*  leftRotate(node* x){
+node*  leftRotate(node* x) {
     node* y = x->right;
     node* T2 = y->left;
     
@@ -53,7 +53,7 @@ node*  leftRotate(node* x){
     return y;
 }
 
-node* RightRotate(node* y){
+node* RightRotate(node* y) {
     node* x = y->left;
     node* T2 = x->right;
     
@@ -66,7 +66,7 @@ node* RightRotate(node* y){
     return x;
 }
 
-node* insert(node* root, int val){
+node* insert(node* root, int val) {
 	if(root == NULL){
 		return createNode(val);
 	}else if(val < root->val){
@@ -101,8 +101,7 @@ node* insert(node* root, int val){
 }
 
 
-int main(){
-	
+int main() {
 	
 	
 	return 0;
