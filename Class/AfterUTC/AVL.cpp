@@ -53,6 +53,19 @@ node*  leftRotate(node* x){
     return y;
 }
 
+node* RightRotate(node* y){
+    node* x = y->left;
+    node* T2 = x->right;
+    
+    x->right = y;
+    y->left = T2;
+    
+    y->height = max(height(y->left), height(y->right)) + 1;
+    x->height = max(height(x->left), height(x->right)) + 1;
+    
+    return x;
+}
+
 node* insert(node* root, int val){
 	if(root == NULL){
 		return createNode(val);
