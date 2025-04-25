@@ -41,11 +41,24 @@ void insertHeap(int val) {
 
 void printHeapArray() {
     for (int i = 0; i < heapSize; i++) {
-        printf("%d ", heap[i]);
+        printf("%d ->", heap[i]);
     }
     printf("\n");
 }
 
 int main() {
+    insertHeap(9);
+    printHeapArray();
+    insertHeap(19);
+    printHeapArray();
+    insertHeap(36);
+    printHeapArray();
+    insertHeap(8);
+    printHeapArray();
+    insertHeap(10);
+    printHeapArray();
+    insertHeap(12);
+    printHeapArray();
+
     return 0;
 }
