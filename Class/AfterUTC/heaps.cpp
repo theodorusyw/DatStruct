@@ -35,14 +35,51 @@ void insert(MinHeap* heap, int value) {
     heap->arr[i] = value;
     heap->size++;
 
+    // upheap
     while(i != 0 && heap->arr[parent(i)] > heap->arr[i]) {
         swap(&heap->arr[parent(i)], &heap->arr[i]);
+        i = parent(i);
     }
+}
+
+void downHeap(MinHeap* heap, int i) {
+    int smallest = i;
+    int left = leftChild(i);
+    int right = rightChild(i);
+
+    if(left < heap->size && heap->arr[left] < heap->arr[i]) {
+        smallest = left;
+    }
+
+    if(right < heap->size && heap->arr[right] < heap->arr[i]) {
+        smallest = right;
+    }
+
+    if (smallest != i) {
+        swap(&heap->arr[i], &heap->arr[smallest]);
+        downHeap(heap, smallest);
+    }
+}
+
+int extract(MinHeap* heap) {
+    if (heap->size <= 0) {
+        printf("Empty");
+        return -1;
+    }
+
+    int root = heap->arr[0];
+    heap->arr[0] = heap->arr[heap->size - 1];
+    heap->size--;
 }
 
 int main() {
     MinHeap heap;
     heap.size = 0;
+
+    insert(&heap, 10);
+    insert(&heap, 20);
+    insert(&heap, 5);
+    printf("%d", heap.arr[0]);
 
     return 0;
 }
