@@ -70,6 +70,9 @@ int extract(MinHeap* heap) {
     int root = heap->arr[0];
     heap->arr[0] = heap->arr[heap->size - 1];
     heap->size--;
+
+    downHeap(heap, 0);
+    return root;
 }
 
 int main() {
