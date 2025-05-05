@@ -80,9 +80,9 @@ int main() {
     heap.size = 0;
 
     insert(&heap, 10);
-    insert(&heap, 20);
     insert(&heap, 5);
-    printf("%d", heap.arr[0]);
+    insert(&heap, 20);
+    insert(&heap, 3);
 
     return 0;
 }
