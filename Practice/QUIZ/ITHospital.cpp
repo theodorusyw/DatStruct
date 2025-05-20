@@ -43,7 +43,7 @@ Node* rotateRight(Node* y) {
 }
 
 // rotasi ke kiri
-Node* leftRotate(Node* x) {
+Node* rotateLeft(Node* x) {
     Node* y = x->right;
     Node* T2 = y->left;
 
@@ -66,6 +66,42 @@ Node* createNode(int id, char* name, int age, char* status) {
     newNode->height = 1;
     newNode->left = newNode->right = NULL;
     return newNode;
+}
+
+Node* insertAVL(Node* root, int id, char* name, int age, char* status) {
+    if(root == NULL) return createNode(id, name, age, status);
+
+    if(id < root->id) {
+        root->left = insertAVL(root->left, id, name, age, status);
+    } else if(id > root->id) {
+        root->right = insertAVL(root->right, id, name, age, status);
+    } else {
+        return root; // jika ID sudah ada
+    }
+
+    root->height = 1 + max(height(root->left), height(root->right));
+
+    int balance = getBalance(root);
+
+    if(balance > 1 && id < root->left->id) {
+        return rotateRight(root);
+    } 
+    
+    if(balance < -1 && id > root->left->id) {
+        return rotateLeft(root);
+    } 
+    
+    if(balance > 1 && id > root->left->id) {
+        root->left = rotateLeft(root->left);
+        return rotateRight(root);
+    }
+
+    if(balance < -1 && id < root->left->id) {
+        root->right = rotateRight(root->right);
+        return rotateLeft(root);
+    }
+
+    return root;
 }
 
 int main() {
