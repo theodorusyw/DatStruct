@@ -104,6 +104,67 @@ Node* insertAVL(Node* root, int id, char* name, int age, char* status) {
     return root;
 }
 
+void inOrder(Node* root) {
+    if(root) {
+        inOrder(root->left);
+        printf("ID: %d, Name: %s, Age: %d, Status: %s\n", root->id, root->name, root->age, root->status);
+        inOrder(root->right);
+    }
+}
+
+void printUrgent(Node* root) {
+    if(root) {
+        printUrgent(root->left);
+
+        if(strcmp(root->status, "Urgent") == 0) {
+            printf("ID: %d, Name: %s, Age: %d, Status: %s\n", root->id, root->name, root->age, root->status);
+        }
+
+        printUrgent(root->right);
+    }
+}
+
+void editPatient(Node* root, int id) {
+    if(root == NULL) {
+        printf("Patient with ID %d not foudn.\n", id);
+        return;
+    }
+
+    if(id < root->id) {
+        editPatient(root->left, id);
+    } else if(id > root->id) {
+        editPatient(root->right, id);
+    } else {
+        printf("Editing patient with ID: %d\n", root->id);
+        printf("Current Name: %s\n", root->name);
+        printf("Current Age: %d\n", root->age);
+        printf("Current Status: %s\n", root->status);
+
+        printf("Enter new name: ");
+        scanf(" %[^\n]", root->name);
+        printf("Enter new age: ");
+        scanf("%d", &root->age);
+        printf("Enter new status (Urgent/OK): ");
+        scanf(" %[^\n]", root->status);
+
+        printf("Patient data updated.\n");
+    }
+}
+
+Node* deleteOkPatient(Node* root) {
+    if(root == NULL) {
+        return NULL;
+    }
+
+    root->left = deleteOkPatient(root->left);
+    root->right = deleteOkPatient(root->right);
+
+    if(strcmp(root->status, "OK") == 0) {
+        printf("Deleting patient with ID: %d\n", root->id);
+        root = deleteNode(root, root->id);
+    }
+}
+
 int main() {
     int choice = -1;
 
