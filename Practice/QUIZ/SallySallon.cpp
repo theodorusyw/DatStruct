@@ -39,7 +39,7 @@ int max(int a, int b) {
 
 int height(Node* root) {
     if(root == NULL) return 0;
-    return height(root->left) - height(root->right);
+    return root->height;
 }
 
 int getBalanceFactor(Node* root) {
@@ -115,7 +115,7 @@ Node* insertAVL(Node* root, Node* newNode) {
     }
 
     if (balance < -1) {
-        if (getBalanceFactor(root->right) >= 0) {
+        if (getBalanceFactor(root->right) <= 0) {
             return rotateLeft(root);
         } else { 
             root->right = rotateRight(root->right);
@@ -169,7 +169,7 @@ Node* deleteAVL(Node* root, char* name) {
     }
 
     if (balance < -1) {
-        if (getBalanceFactor(root->right) >= 0) {
+        if (getBalanceFactor(root->right) <= 0) {
             return rotateLeft(root);
         } else { 
             root->right = rotateRight(root->right);
@@ -214,6 +214,32 @@ Node* insertMenu(Node* root) {
     return root;
 }
 
+void viewMenu(Node *root) {
+    if (root == NULL) {
+        printf("No data available.\n");
+        enterToContinue();
+        return;
+    }
+    
+    char input[10];
+    
+    
+    do {
+        printf("Insert View Mode [pre | in | post]: ");
+        scanf("%s", input); gc
+    } while (strcmp(input, "pre") != 0 && strcmp(input, "in") != 0 && strcmp(input, "post") != 0);
+    
+    if (strcmp(input, "pre") == 0) {
+        preOrder(root);
+    } else if (strcmp(input, "in") == 0) {
+        inOrder(root);
+    } else {
+        postOrder(root);
+    }
+    
+    enterToContinue();
+}
+
 void preOrder(Node* root) {
     if (root != NULL) {
         printf("Treatment   : %s\n", root->name);
@@ -228,53 +254,27 @@ void preOrder(Node* root) {
 
 void inOrder(Node* root) {
     if (root != NULL) {
-        preOrder(root->left);
+        inOrder(root->left);
 
         printf("Treatment   : %s\n", root->name);
         printf("Price       : %d\n", root->price);
         printf("Category    : %s\n", root->cate);
         printf("Availablity : %s\n", root->avail);
         
-        preOrder(root->right);
+        inOrder(root->right);
     }
 }
 
 void postOrder(Node* root) {
     if (root != NULL) {
-        preOrder(root->left);
-        preOrder(root->right);
+        postOrder(root->left);
+        postOrder(root->right);
         
         printf("Treatment   : %s\n", root->name);
         printf("Price       : %d\n", root->price);
         printf("Category    : %s\n", root->cate);
         printf("Availablity : %s\n", root->avail);
     }
-}
-
-void viewMenu(Node *root) {
-    if (root == NULL) {
-        printf("No data available.\n");
-        enterToContinue();
-        return;
-    }
-
-    char input[10];
-
-
-    do {
-        printf("Insert View Mode [pre | in | post]: ");
-        scanf("%s", input); gc
-    } while (strcmp(input, "pre") != 0 && strcmp(input, "in") != 0 && strcmp(input, "post") != 0);
-
-    if (strcmp(input, "pre") == 0) {
-        preOrder(root);
-    } else if (strcmp(input, "in") == 0) {
-        inOrder(root);
-    } else {
-        postOrder(root);
-    }
-
-    enterToContinue();
 }
 
 int alreadyInTree(Node* root, char* name) {
