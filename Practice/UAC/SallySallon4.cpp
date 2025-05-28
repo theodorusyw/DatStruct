@@ -1,14 +1,14 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define gc getchar();
 
 struct Node {
     char name[101];
     int price;
-    char cate[20];
-    char avail[20];
+    char cate[101];
+    char avail[101];
     int height;
     struct Node* left;
     struct Node* right;
@@ -29,7 +29,7 @@ Node* createNode(char* name, int price, char* cate, char* avail) {
 }
 
 void enterToContinue() {
-    printf("Press ENTER to Continue...\n");
+    puts("Press ENTER to Continue...");
     gc
 }
 
@@ -120,7 +120,7 @@ Node* insertAVL(Node* root, Node* newNode) {
     }
 
     if (balance < -1) {
-        if (getBalance(root->right) <= 0) {
+        if (getBalance(root->left) <= 0) {
             return rotateLeft(root);
         } else {
             root->right = rotateRight(root);
@@ -154,9 +154,9 @@ Node* deleteAVL(Node* root, char* name) {
             }
 
             strcpy(root->name, temp->name);
+            root->price = temp->price;
             strcpy(root->cate, temp->cate);
             strcpy(root->avail, temp->avail);
-            root->price = temp->price;
 
             root->left = deleteAVL(root->left, temp->name);
         }
@@ -176,7 +176,7 @@ Node* deleteAVL(Node* root, char* name) {
     }
 
     if (balance < -1) {
-        if (getBalance(root->right) <= 0) {
+        if (getBalance(root->left) <= 0) {
             return rotateLeft(root);
         } else {
             root->right = rotateRight(root);
@@ -217,47 +217,20 @@ Node* insertMenu(Node* root) {
     root = insertAVL(root, newNode);
     count++;
 
-    printf("Succesfully Insert\n");
+    puts("Succesfull");
     enterToContinue();
 
     return root;
 }
 
-void preOrder(Node* root);
-void inOrder(Node* root);
-void postOrder(Node* root);
-
-void viewMenu(Node* root) {
-    if (root == NULL) {
-        printf("No Data Available!\n");
-        enterToContinue();
-        return;
-    }
-
-    char input[10];
-
-    do {
-        printf("Insert View Mode [PreOrder | InOrder | PostOrder] : ");
-        scanf("%s", input); gc
-    } while (strcmp(input, "PreOrder") != 0 && strcmp(input, "InOrder") != 0 && strcmp(input, "PostOrder") != 0);
-
-    if (strcmp(input, "PreOrder") == 0) {
-        preOrder(root);
-    } else if (strcmp(input, "InOrder") == 0) {
-        inOrder(root);
-    } else {
-        postOrder(root);
-    }
-
-    enterToContinue();
-}
-
 void preOrder(Node* root) {
     if (root != NULL) {
+        printf("================================\n");
         printf("Treatment   : %s\n", root->name);
         printf("Price       : %d\n", root->price);
         printf("Category    : %s\n", root->cate);
         printf("Availablity : %s\n", root->avail);
+        printf("================================\n");
 
         preOrder(root->left);
         preOrder(root->right);
@@ -267,33 +240,59 @@ void preOrder(Node* root) {
 void inOrder(Node* root) {
     if (root != NULL) {
         inOrder(root->left);
-
+        printf("================================\n");
         printf("Treatment   : %s\n", root->name);
         printf("Price       : %d\n", root->price);
         printf("Category    : %s\n", root->cate);
         printf("Availablity : %s\n", root->avail);
+        printf("================================\n");
 
         inOrder(root->right);
     }
 }
-
 void postOrder(Node* root) {
     if (root != NULL) {
         postOrder(root->left);
         postOrder(root->right);
 
+        printf("================================\n");
         printf("Treatment   : %s\n", root->name);
         printf("Price       : %d\n", root->price);
         printf("Category    : %s\n", root->cate);
         printf("Availablity : %s\n", root->avail);
+        printf("================================\n");
     }
+}
+
+void viewMenu(Node* root) {
+    if (root == NULL) {
+        puts("There is no data!");
+        enterToContinue();
+        return;
+    }
+
+    char input[10];
+    do {
+        printf("Insert View Mode [PreOrder | InOrder | PostOrder] : ");
+        scanf("%s", input); gc
+    } while (strcmp(input, "PreOrder") != 0 && strcmp(input, "InOrder") != 0 && strcmp(input, "PostOrder") != 0);
+    
+    if (strcmp(input, "PreOrder") == 0) {
+        preOrder(root);
+    } else if (strcmp(input, "InOrder") == 0) {
+        inOrder(root);
+    } else {
+        postOrder(root);
+    }
+    
+    enterToContinue();
 }
 
 int alreadyInTree(Node* root, char* name) {
     if (root == NULL) {
         return -1;
     }
-    
+
     if (strcmp(root->name, name) == 0) {
         return 1;
     }
@@ -302,27 +301,28 @@ int alreadyInTree(Node* root, char* name) {
     if (leftSide == 1) {
         return 1;
     }
+
     return alreadyInTree(root->right, name);
 }
 
 Node* deleteMenu(Node* root) {
     if (root == NULL) {
-        printf("No Data Available!\n");
+        puts("No Data");
         enterToContinue();
         return root;
     }
 
     char name[101];
 
-    printf("Insert Name to Delete : ");
+    printf("Insert name : ");
     scanf("%[^\n]", name); gc
 
     if (alreadyInTree(root, name) == 1) {
         root = deleteAVL(root, name);
-        printf("Data Succesfully Deleted!\n");
+        puts("Succesfull");
         count--;
     } else {
-        printf("Data Not Found");
+        puts("Not Found");
     }
 
     enterToContinue();
@@ -335,31 +335,36 @@ int main() {
 
     do {
         do {
-            printf("1. Insert Menu\n");
-            printf("2. View Menu\n");
-            printf("3. Delete Menu\n");
-            printf("4. Exit\n");
+            system("clear");
+            puts("==============");
+            puts("Sally Salon");
+            puts("==============");
+            puts("1. Insert Menu");
+            puts("2. View Menu");
+            puts("3. Delete Menu");
+            puts("4. Exit");
+            puts("==============");
             printf(">> ");
             scanf("%d", &choice); gc
-        } while (choice < 1 || choice > 4);;
+        } while(choice < 1 || choice > 4);
 
         switch (choice) {
-            case 1:
-                node = insertMenu(node);
-                break;
-            case 2:
-                viewMenu(node);
-                break;
-            case 3:
-                node = deleteMenu(node);
-                break;
-            case 4:
-                printf("Exiting...\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+        case 1:
+            node = insertMenu(node);
+            break;
+        case 2:
+            viewMenu(node);
+            break;
+        case 3:
+            node = deleteMenu(node);
+            break;
+        case 4:
+            puts("Exiting...");
+            return 0;
+        default:
+            puts("Invalid choice, please try again");
+            break;
         }
-    } while (1);
-
+    } while(1);
     return 0;
 }
