@@ -132,7 +132,9 @@ Node* insertAVL(Node* root, Node* newNode) {
 }
 
 Node* deleteAVL(Node* root, char* name) {
-    
+    if (root == NULL) {
+        
+    }
 }
 
 int main() {
