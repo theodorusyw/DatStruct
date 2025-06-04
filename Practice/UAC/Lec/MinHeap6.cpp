@@ -49,7 +49,7 @@ void downHeap(Heap* heap, int i) {
     if (left < heap->size && heap->arr[left] < heap->arr[smallest]) {
         smallest = left;
     }
-
+    
     if (right < heap->size && heap->arr[right] < heap->arr[smallest]) {
         smallest = right;
     }
@@ -87,6 +87,5 @@ int main() {
         printf("%d\n", heap.arr[j]);
         j++;
     }
-
     return 0;
 }
