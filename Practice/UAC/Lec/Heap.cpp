@@ -34,7 +34,12 @@ void insert(MinHeap* heap, int value) {
     heap->arr[i] = value;
     heap->size++;
 
-    while(i != 0 && heap->arr[parent(i)] > heap->arr[i]){
+    while(i != 0 && heap->arr[parent(i)] < heap->arr[i]){ // MIN
+        swap(&heap->arr[parent(i)], &heap->arr[i]);
+        i = parent(i);
+    }
+
+    while(i != 0 && heap->arr[parent(i)] > heap->arr[i]){ // MAX
         swap(&heap->arr[parent(i)], &heap->arr[i]);
         i = parent(i);
     }
@@ -45,10 +50,16 @@ void downHeap(MinHeap* heap, int i){
     int left = leftChild(i);
     int right = rightChild(i);
 
-    if (left < heap->size && heap->arr[left] < heap->arr[smallest]) {
+    if (left < heap->size && heap->arr[left] < heap->arr[smallest]) { // MIN
         smallest = left;
     }
-    if (right < heap->size && heap->arr[right] < heap->arr[smallest]) {
+    if (right < heap->size && heap->arr[right] < heap->arr[smallest]) { // MIN
+        smallest = right;
+    }
+    if (left < heap->size && heap->arr[left] > heap->arr[smallest]) { // MAX
+        smallest = left;
+    }
+    if (right < heap->size && heap->arr[right] > heap->arr[smallest]) { // MAX
         smallest = right;
     }
     if (smallest != i) {
