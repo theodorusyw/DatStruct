@@ -114,7 +114,7 @@ Node* insertAVL(Node* root, Node* newNode) {
         if (getBalance(root->left) >= 0) {
             return rotateRight(root);
         } else {
-            root->left = rotateLeft(root);
+            root->left = rotateLeft(root->left);
             return rotateRight(root);
         }
     }
@@ -123,7 +123,7 @@ Node* insertAVL(Node* root, Node* newNode) {
         if (getBalance(root->left) <= 0) {
             return rotateLeft(root);
         } else {
-            root->right = rotateRight(root);
+            root->right = rotateRight(root->right);
             return rotateLeft(root);
         }
     }
